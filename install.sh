@@ -25,6 +25,7 @@ cd $builddir
 mkdir -p /home/$username/.config
 mkdir -p /home/$username/.fonts
 mkdir -p /home/$username/Pictures
+mkdir -p /home/$username/Source
 mkdir -p /usr/share/sddm/themes
 cp .Xresources /home/$username
 cp .Xnord /home/$username
@@ -68,12 +69,16 @@ cd Nordzy-cursors
 cd $builddir
 rm -rf Nordzy-cursors
 
-# Install brave-browser
-sudo nala install apt-transport-https curl -y
-sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo nala update
-sudo nala install brave-browser -y
+# Install Chromium
+nala install chromium -y
+
+# Install Neofetch
+nala install neofetch -y
+
+# Install & Setup Cockpit
+nala install cockpit -y
+mkdir -p /usr/lib/x86_64-linux-gnu/udisks2/modules
+systemctl start cockpit
 
 # Enable graphical login and change target from CLI to GUI
 systemctl enable sddm
